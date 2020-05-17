@@ -117,7 +117,7 @@ class ApiClient implements ApiInterface
         switch ($method) {
             case 'POST':
                 curl_setopt($curl, CURLOPT_POST, count($data));
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
                 break;
             case 'PUT':
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -344,7 +344,7 @@ class ApiClient implements ApiInterface
             $data['variables'][] = ['name' => $name, 'value' => $val];
         }
 
-        $requestResult = $this->sendRequest('/addressbooks/' . $bookID . '/emails/variable', 'POST', $data);
+        $requestResult = $this->sendRequest('addressbooks/' . $bookID . '/emails/variable', 'POST', $data);
 
         return $this->handleResult($requestResult);
     }
